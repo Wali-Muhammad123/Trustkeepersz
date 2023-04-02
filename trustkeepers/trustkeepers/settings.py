@@ -38,10 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apu',
-    'rest_framework'
+    'rest_framework',
+    'corsheaders'
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -82,6 +84,14 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK={
+    'DEFAULT_THROTTLE_CLASSES':['rest_framework.throttling.AnonRateThrottle','rest_framework.throttling.UserRateThrottle'],
+    'DEFAULT_THROTTLE_RATES':{
+        'anon':'10/day',
+        'user':'1000/day'
+        }
+
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
